@@ -8,7 +8,7 @@ int main()
 {
 	Neuron n1;
 	
-	int numbCycles = 10;
+	int numbCycles = 50;
 	
 	double current(0);
 	cout<<"enter the external current : ";
@@ -28,10 +28,10 @@ int main()
 	ofstream file;
 	file.open("potentialsN1.txt");
 	
-	for(int i(0);i<=10;i++)
+	for(int i(0);i<=numbCycles;i++)
 	{
 		double extCur(0);
-		if(i*DT > inf and i*DT < sup)
+		if(i*DT >= inf and i*DT < sup)
 		{
 			extCur = current;
 		}
