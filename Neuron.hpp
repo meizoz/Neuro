@@ -7,6 +7,8 @@ class Neuron
 {
 	public :
 	
+	Neuron();
+	
 	double getPot() const;
 	
 	void update(double t, double extCur);

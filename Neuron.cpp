@@ -5,6 +5,9 @@
 const double A = exp(-(DT/TAU)); // V(t+h)= A*V(t) + extCur*B
 const double B = (R/TAU)*(1-A);
 
+Neuron::Neuron() : pot(0)
+{};
+
 double Neuron::getPot() const
 {
 	return pot;
