@@ -10,6 +10,7 @@ class Neuron
 	Neuron();
 	
 	double getPot() const;
+	bool isRefractory() const;
 	
 	void update(double t, double extCur);
 	
@@ -17,6 +18,7 @@ class Neuron
 	
 	double pot; //membrane potential
 	std::vector<double> spikes; //vector to access the number of spikes easily, a double to record the time of the spike
+	double refractTimer;
 };
 
 #endif
