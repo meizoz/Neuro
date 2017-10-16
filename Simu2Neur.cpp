@@ -15,22 +15,40 @@ int main()
 	brain[0] = N1;
 	brain[1] = N2;
 	
-	int nbrCycles(50);
+	int nbrCycles(1000); //steps of simulation, multiplie by DT (Constants.hpp) to find duration of simulation
+	
+	ofstream file1;
+	file1.open("potentialsNpre.txt");
+	ofstream file2;
+	file2.open("potentialsNpost.txt");
 	
 	for(int i(0);i<nbrCycles;i++)
 	{
-		for(int j(0);j<brain.size();j++)
-		{
-			vector<int> tar(brain[j].update(i,0));
+		double Iext = 1;
+		
+		vector<int> tar1(N1.update(i,Iext));
 			
-			if(!tar.empty())
-			{
-				for(int k(0);k<tar.size();k++)
-				{
-					brain[tar[k]].recieve(i+D);
-				}
-			}
+		if(!tar1.empty())
+		{
+			N2.recieve(i,D);
 		}
+		
+		vector<int> tar2(N2.update(i,0));
+		
+		
+		if(file1.is_open())
+		{
+			file1<<N1.getPot()<<endl;
+		}
+		
+		if(file2.is_open())
+		{
+			file2<<N2.getPot()<<endl;
+		}
+		
 	}
 	
+	
+	file1.close();
+	file2.close();
 }
