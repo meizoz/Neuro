@@ -15,7 +15,7 @@ Neuron::Neuron(std::vector<int> targs) : pot(0), refractTimer(-1)
 		}
 }
 
-Neuron::Neuron() : pot(0), refractTimer(-1)
+Neuron::Neuron() : pot(0), refractTimer(-1), isInhib(false)
 {
 	for(int i(0);i<recievedBuffer.size();i++)
 		{
@@ -28,9 +28,41 @@ double Neuron::getPot() const
 	return pot;
 }
 
-void Neuron::recieve(int t, int delay)
+bool Neuron::isInhibitory() const
 {
-	recievedBuffer[(t+delay) % (D+1)] += J;
+	return isInhib;
+}
+
+void Neuron::setNeuronType(bool inhib)
+{
+	isInhib = inhib;
+}
+
+void Neuron::addPotential(double extPot)
+{
+	pot += extPot;
+}
+
+void Neuron::setTargets(std::vector<int> tar)
+{
+	targets = tar;
+}
+
+void Neuron::addTarget(int tar)
+{
+	targets.push_back(tar);
+}
+
+void Neuron::recieve(int t, int delay, bool isInhibitory)
+{
+	if(isInhibitory)
+	{
+		recievedBuffer[(t+delay) % (D+1)] += JI;
+	}
+	else
+	{
+		recievedBuffer[(t+delay) % (D+1)] += J;
+	}
 }
 
 bool Neuron::isRefractory()const
@@ -55,6 +87,7 @@ std::vector<int> Neuron::update(int t, double extCur)
 		
 		pot += recievedBuffer[t % (D+1)];
 		recievedBuffer[t % (D+1)] = 0.0;
+		
 	}
 	
 	if(pot > NEUR_THRESHOLD) //condition for spike
