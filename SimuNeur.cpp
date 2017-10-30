@@ -10,12 +10,21 @@ using namespace std;
 int main()
 {
 	
-	//initialisation------------------------------------------------------------------------------------------------------------------------------------------------------
+	//number of neurons------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	
-	array<Neuron,12500> brain; //simulation of 12'500 neurons
+	const int nbrENeurons(10000);
+	const int nbrINeurons(2500);
 	
-	const int inhibitoryBegin (10000); // 10'000 exitatory and 2'500 inhibitory : the firste inhibitory is brain[10000]
+	//initialisation----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	const int nbrNeurons = nbrENeurons + nbrINeurons; //simulation of 12'500 neurons
+	const int inhibitoryBegin (nbrENeurons); // 10'000 exitatory and 2'500 inhibitory : the firste inhibitory is brain[10000]
+	
+	const int nbrEConnections = nbrENeurons/10; //10 percent connection
+	const int nbrIConnections = nbrINeurons/10;
+	
+	array<Neuron,nbrNeurons> brain; 
 	
 	for(int i(inhibitoryBegin);i<brain.size();i++) //set the inhibitory neurons
 	{
@@ -27,9 +36,11 @@ int main()
 	std::uniform_int_distribution<int> uni1(0,inhibitoryBegin-1);
 	std::uniform_int_distribution<int> uni2(inhibitoryBegin,brain.size()-1); //set the random number generators
 	
-	for(int n(0);n<brain.size();n++) //every neuron recieves the connection of 1000 exitatory neuron and 250 inhibitory ones
+	
+	
+	for(int n(0);n<brain.size();n++) //every neuron recieves the connection of 1000 exitatory neuron and 250 inhibitory ones (10 percent connection)
 	{
-		for(int i(0);i<1000;i++)
+		for(int i(0);i<nbrEConnections;i++)
 		{
 			int target;
 			
@@ -42,7 +53,7 @@ int main()
 			brain[target].addTarget(n);
 		}
 		
-		for(int j(0);j<250;j++)
+		for(int j(0);j<nbrIConnections;j++)
 		{
 			int target;
 			do
@@ -60,11 +71,11 @@ int main()
 	
 	//Simulation---------------------------------------------------------------------------------------------------------------------------------------
 	
-	int nbrCycles(1000);
+	int nbrCycles(12000);
 	
 	std::random_device ra;
 	std::mt19937 gen(ra());
-	std::poisson_distribution<> poi(0.2); //poisson generation to add random spikes from other parts of the brain
+	std::poisson_distribution<> poi(NU_EXT*DT); //poisson generation to add random spikes from other parts of the brain at every time steps
 	
 	ofstream file1;
 	file1.open("spikes.txt");
@@ -74,7 +85,7 @@ int main()
 	{
 		for(int j(0);j<brain.size();j++)
 		{
-			brain[j].addPotential(poi(gen)); //addition of the random spikes
+			brain[j].addPotential(J*poi(gen)); //addition of the random spikes
 			vector<int> tar(brain[j].update(i,0)); 
 			
 			if(!tar.empty())
@@ -90,7 +101,7 @@ int main()
 		
 		if(file1.is_open())
 		{
-			file1<<spikesCount<<endl;
+			file1<<i*DT<<" "<<spikesCount<<endl;
 		}
 		spikesCount=0;
 	}
