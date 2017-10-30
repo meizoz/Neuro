@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 project (Neuro)
 
+set(CMAKE_CXX_FLAGS "-W -Wall -pedantic -std=c++11")
+
 option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" ON)
 if(BUILD_DOCUMENTATION)
   FIND_PACKAGE(Doxygen)

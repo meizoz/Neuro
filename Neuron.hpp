@@ -28,9 +28,9 @@ class Neuron
 	void setTargets(std::vector<int> tar); //!< sets the tagets of the neuron
 	void setNeuronType(bool inhib); //!< sets the neuron type : true for inhibitory neuron, false for exitatory
 	bool isRefractory() const; //!< returns true if the neuron is in refractory state
-	void recieve(int time, int delay, bool inhib); //!< plan the time at which a spike is recieved
-	void addTarget(int tar); //!< add a target to the list of tagets
-	void addPotential(double extPot); //!< add external potential to the membrane potential
+	void recieve(int time, int delay, bool inhib); //!< plan the time at which a spike is recieved @param time time at which the spike is recieved @param delay delay before the spike is recieved @param inhib true if the spike is inhibitory
+	void addTarget(int tar); //!< add a target to the list of tagets @param tar index of the target in the brain
+	void addPotential(double extPot); //!< add external potential to the membrane potential @param extPot a value to add to the membrane potential
 	
 	std::vector<int> update(int t, double extCur);
 	
