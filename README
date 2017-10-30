@@ -3,4 +3,4 @@ Project of neurons simulation
 Compile with SimuNeur.cpp as main for the full simulation
 (Simu1Neur.cpp and Simu2Neur.cpp used for previous testing)
 
-spikes.png is a graph from the results of the program, x axis is time (in time steps), y axis is the number of spikes
+spikes.png is a graph from the results of the program, x axis is time (in ms), y axis is the number of spikes
