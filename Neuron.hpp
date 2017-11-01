@@ -38,7 +38,7 @@ class Neuron
 	
 	bool isInhib;  //!< a bool, true if the neuron is inhibitory 
 	double pot;  //!< membrane potential
-	std::vector<int> spikes;  //!< a vector to access the number of spikes easily, an int to record the time step of the spike
+	//std::vector<int> spikes;  //!< a vector to access the number of spikes easily, an int to record the time step of the spike
 	double refractTimer; //!< refractory state duration
 	std::array<double,D+1> recievedBuffer; //!< recieved spikes buffer
 	std::vector<int> targets; //!< int corresponding to target neurons

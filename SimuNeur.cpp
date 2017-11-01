@@ -13,20 +13,20 @@ int main()
 	//number of neurons------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	
-	const int nbrENeurons(10000);
-	const int nbrINeurons(2500);
+	const unsigned int nbrENeurons(10000);
+	const unsigned int nbrINeurons(2500);
 	
 	//initialisation----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	const int nbrNeurons = nbrENeurons + nbrINeurons; //simulation of 12'500 neurons
-	const int inhibitoryBegin (nbrENeurons); // 10'000 exitatory and 2'500 inhibitory : the firste inhibitory is brain[10000]
+	const unsigned int nbrNeurons = nbrENeurons + nbrINeurons; //simulation of 12'500 neurons
+	const unsigned int inhibitoryBegin (nbrENeurons); // 10'000 exitatory and 2'500 inhibitory : the firste inhibitory is brain[10000]
 	
-	const int nbrEConnections = nbrENeurons/10; //10 percent connection
-	const int nbrIConnections = nbrINeurons/10;
+	const unsigned int nbrEConnections = nbrENeurons/10; //10 percent connection
+	const unsigned int nbrIConnections = nbrINeurons/10;
 	
 	array<Neuron,nbrNeurons> brain; 
 	
-	for(int i(inhibitoryBegin);i<brain.size();i++) //set the inhibitory neurons
+	for(unsigned int i(inhibitoryBegin);i<brain.size();i++) //set the inhibitory neurons
 	{
 		brain[i].setNeuronType(true);
 	}
@@ -38,11 +38,11 @@ int main()
 	
 	
 	
-	for(int n(0);n<brain.size();n++) //every neuron recieves the connection of 1000 exitatory neuron and 250 inhibitory ones (10 percent connection)
+	for(unsigned int n(0);n<brain.size();n++) //every neuron recieves the connection of 1000 exitatory neuron and 250 inhibitory ones (10 percent connection)
 	{
-		for(int i(0);i<nbrEConnections;i++)
+		for(unsigned int i(0);i<nbrEConnections;i++)
 		{
-			int target;
+			unsigned int target;
 			
 			do
 			{
@@ -53,9 +53,10 @@ int main()
 			brain[target].addTarget(n);
 		}
 		
-		for(int j(0);j<nbrIConnections;j++)
+		for(unsigned int j(0);j<nbrIConnections;j++)
 		{
-			int target;
+			unsigned int target;
+			
 			do
 			{
 				target = uni2(rng);
@@ -71,7 +72,7 @@ int main()
 	
 	//Simulation---------------------------------------------------------------------------------------------------------------------------------------
 	
-	int nbrCycles(12000);
+	const unsigned int nbrCycles(12000);
 	
 	std::random_device ra;
 	std::mt19937 gen(ra());
@@ -81,9 +82,9 @@ int main()
 	file1.open("spikes.txt");
 	int spikesCount(0);
 	
-	for(int i(0);i<nbrCycles;i++)
+	for(unsigned int i(0);i<nbrCycles;i++)
 	{
-		for(int j(0);j<brain.size();j++)
+		for(unsigned int j(0);j<brain.size();j++)
 		{
 			brain[j].addPotential(J*poi(gen)); //addition of the random spikes
 			vector<int> tar(brain[j].update(i,0)); 
@@ -92,7 +93,7 @@ int main()
 			{
 				spikesCount++;
 				
-				for(int k(0);k<tar.size();k++)
+				for(unsigned int k(0);k<tar.size();k++)
 				{
 					brain[tar[k]].recieve(i,D,brain[j].isInhibitory());
 				}
@@ -101,7 +102,7 @@ int main()
 		
 		if(file1.is_open())
 		{
-			file1<<i*DT<<" "<<spikesCount<<endl;
+			file1<<i<<" "<<spikesCount<<endl;
 		}
 		spikesCount=0;
 	}

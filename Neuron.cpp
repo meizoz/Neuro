@@ -92,7 +92,7 @@ std::vector<int> Neuron::update(int t, double extCur)
 	
 	if(pot > NEUR_THRESHOLD) //condition for spike
 	{
-		spikes.push_back(t);
+		//spikes.push_back(t);
 		pot = 0;
 		refractTimer = 2;
 		

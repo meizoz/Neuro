@@ -16,7 +16,7 @@ const double J = 0.1; //!< current recieved by post synaptic neuron in mV in cas
 const double JI = -J*G; //!< current recieved by post synaptic neuron in mV in case of inhibitory spike
 
 const int D = 15; //!< Delay between spike and recieved spike in time steps
-const double ETA = 2; //!< constant used to compute the random number of spikes comming from the rest of the brain
-const double NU_EXT = ETA * (1/0.1); //!< constant used to compute the random number of spikes comming from the rest of the brain
+const double ETA = 2; //!< constant used to compute the random number of spikes coming from the rest of the brain
+const double NU_EXT = ETA * (1/0.1); //!< constant used to compute the random number of spikes coming from the rest of the brain
 
 #endif
