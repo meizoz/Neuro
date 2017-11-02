@@ -80,7 +80,7 @@ int main()
 	
 	ofstream file1;
 	file1.open("spikes.txt");
-	int spikesCount(0);
+	//int spikesCount(0);
 	
 	for(unsigned int i(0);i<nbrCycles;i++)
 	{
@@ -91,7 +91,12 @@ int main()
 			
 			if(!tar.empty())
 			{
-				spikesCount++;
+				//spikesCount++;
+				
+				if(file1.is_open())
+				{
+					file1<<i<<" "<<j<<endl;
+				}
 				
 				for(unsigned int k(0);k<tar.size();k++)
 				{
@@ -100,11 +105,11 @@ int main()
 			}
 		}
 		
-		if(file1.is_open())
+	/*	if(file1.is_open())
 		{
 			file1<<i<<" "<<spikesCount<<endl;
 		}
-		spikesCount=0;
+		spikesCount=0;*/
 	}
 	
 	file1.close();
