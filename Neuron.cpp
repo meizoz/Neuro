@@ -89,6 +89,11 @@ std::vector<int> Neuron::update(int t, double extCur)
 		recievedBuffer[t % (D+1)] = 0.0;
 		
 	}
+	else
+	{
+		 refractTimer -= DT;
+		 recievedBuffer[t % (D+1)] = 0.0;
+	}
 	
 	if(pot > NEUR_THRESHOLD) //condition for spike
 	{
@@ -102,10 +107,7 @@ std::vector<int> Neuron::update(int t, double extCur)
 		}
 	}
 	 
-	if(isRefractory())
-	{
-		 refractTimer -= DT;
-	}
+	
 	
 	return targs;
 }

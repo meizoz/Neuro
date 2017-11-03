@@ -86,7 +86,11 @@ int main()
 	{
 		for(unsigned int j(0);j<brain.size();j++)
 		{
-			brain[j].addPotential(J*poi(gen)); //addition of the random spikes
+			if(!brain[j].isRefractory())
+			{
+				brain[j].addPotential(J*poi(gen)); //addition of the random spikes from other parts of the brain
+			}
+			
 			vector<int> tar(brain[j].update(i,0)); 
 			
 			if(!tar.empty())
