@@ -13,7 +13,7 @@ TEST(NeuronTest,OneCycleTest)
 	const double A = exp(-(DT/TAU));
 	const double B = R*(1-A);
 	Neuron n;
-	n.update(1, 1);
+	bool test = n.update(1, 1);
 	EXPECT_NEAR(B,n.getPot(),0.001);
 	
 }
@@ -25,8 +25,8 @@ TEST(NeuronTest,NoSpikes)
 	
 	for(int i(0);i<1000;++i)
 	{
-		vector<int> spike = n.update(i,1);
-		if(!spike.empty())
+		bool spike = n.update(i,1);
+		if(spike)
 		{
 			++count;
 		}
@@ -43,8 +43,8 @@ TEST(NeuronTest,spike)
 	
 	for(int i(0);i<1000;++i)
 	{
-		std::vector<int> spike = n.update(i,1.1);
-		if(!spike.empty())
+		bool spike = n.update(i,1.1);
+		if(spike)
 		{
 			++count;
 		}
@@ -64,14 +64,14 @@ TEST(TwoNeuronTest,Link)
 	{
 		double Iext = 1.1;
 		
-		vector<int> tar1(N1.update(i,Iext));
+		bool spk1(N1.update(i,Iext));
 			
-		if(!tar1.empty())
+		if(spk1)
 		{
 			N2.recieve(i,D,false);
 		}
 		
-		vector<int> tar2(N2.update(i,0));
+		bool spk2(N2.update(i,0));
 		
 		N2totpot += N2.getPot();
 		

@@ -91,9 +91,9 @@ int main()
 				brain[j].addPotential(J*poi(gen)); //addition of the random spikes from other parts of the brain
 			}
 			
-			vector<int> tar(brain[j].update(i,0)); 
+			bool spk(brain[j].update(i,0)); 
 			
-			if(!tar.empty())
+			if(spk)
 			{
 				//spikesCount++;
 				
@@ -102,9 +102,14 @@ int main()
 					file1<<i<<" "<<j<<endl;
 				}
 				
-				for(unsigned int k(0);k<tar.size();k++)
+				vector<int> tar = brain[j].getTargets();
+				
+				if(!tar.empty())
 				{
-					brain[tar[k]].recieve(i,D,brain[j].isInhibitory());
+					for(unsigned int k(0);k<tar.size();k++)
+					{
+						brain[tar[k]].recieve(i,D,brain[j].isInhibitory());
+					}
 				}
 			}
 		}

@@ -53,6 +53,11 @@ void Neuron::addTarget(int tar)
 	targets.push_back(tar);
 }
 
+std::vector<int> Neuron::getTargets() const
+{
+	return targets;
+}
+
 void Neuron::recieve(int t, int delay, bool isInhibitory)
 {
 	if(isInhibitory)
@@ -77,9 +82,8 @@ bool Neuron::isRefractory()const
 	}
 }
 
-std::vector<int> Neuron::update(int t, double extCur)
+bool Neuron::update(int t, double extCur)
 {
-	std::vector<int> targs;
 	
 	if(!isRefractory())
 	{	
@@ -101,13 +105,10 @@ std::vector<int> Neuron::update(int t, double extCur)
 		pot = 0;
 		refractTimer = 2;
 		
-		if(!targets.empty())
-		{
-			targs = targets;
-		}
+		return true;	
 	}
 	 
 	
 	
-	return targs;
+	return false;
 }
